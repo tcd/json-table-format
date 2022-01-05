@@ -1,12 +1,24 @@
 {
-  "name": "json-table-format",
-  "description": "Format JSON in a compact, readable, aligned way.",
-  "version": "0.0.0",
-  "author": "Clay Dunston <dunstontc@gmail.com>",
-  "license": "MIT",
-  "keywords": ["JSON", "json"],
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+    "name": "json-table-format",
+    "description": "Format JSON in a compact, readable, aligned way.",
+    "version": "0.0.0",
+    "author": "Clay Dunston <dunstontc@gmail.com>",
+    "license": "MIT",
+    "keywords": [ "JSON", "json" ],
+    "scripts": {
+        "build": "exho 'no build script yet",
+        "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts"
+    },
+    "dependencies": {
+        "ts-node": "^10.2.1",
+        "tsconfig-paths": "^3.11.0",
+        "typescript": "^4.4.3"
+      },
+      "devDependencies": {
+        "@types/chai": "^4.2.22",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "^16.9.1",
+        "chai": "^4.3.4",
+        "mocha": "^9.1.3"
+      }
 }
