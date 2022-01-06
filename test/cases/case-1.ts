@@ -44,7 +44,7 @@ export const CASE_1 = {
         "minimum": 9,
     },
     valueLengths: {
-        "type": 7,
+        "type": 9,
         "description": 59,
         "minimum": 1,
     },

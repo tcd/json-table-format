@@ -4,9 +4,12 @@ import {
 } from "@types"
 import {
     determineJsonDataType,
-    getKeys,
     getLongestKeyLengths_1,
-    getLongestValueLengths
+    getKeys_array,
+    getKeys_object,
+    getTopKeys,
+    getLongestValueLengths_array,
+    getLongestValueLengths_object,
 } from "@lib"
 
 export class Formatter {
@@ -42,7 +45,7 @@ export class Formatter {
     public isValid(): boolean {
         if (this._isInvalid) { return false }
         if (this.jsonDataType === JsonDataType.OTHER)  { return false }
-        if (this.jsonDataType === JsonDataType.OBJECT) { return true  } // Can't handle these yet
+        if (this.jsonDataType === JsonDataType.OBJECT) { return true  }
         if (this.jsonDataType === JsonDataType.ARRAY)  { return true  }
         return false
     }
@@ -76,18 +79,16 @@ export class Formatter {
     }
 
     private _parseArray(): void {
-        this._keys = getKeys(this.inputJson)
+        this._keys = getKeys_array(this.inputJson)
         this._keyLengths = getLongestKeyLengths_1(this._keys)
-        this._valueLengths = getLongestValueLengths(this.inputJson)
-        console.log({
-            _keys: this._keys,
-            _keyLengths: this._keyLengths,
-            _valueLengths: this._valueLengths,
-        })
+        this._valueLengths = getLongestValueLengths_array(this.inputJson)
     }
 
     private _parseObject(): void {
-
+        this._keys = getKeys_object(this.inputJson)
+        this._topKeys = getTopKeys(this.inputJson)
+        this._keyLengths = getLongestKeyLengths_1(this._keys)
+        this._valueLengths = getLongestValueLengths_object(this.inputJson)
     }
 
     private _setDefaultPropertyValues() {
@@ -96,6 +97,7 @@ export class Formatter {
         this.inputString   = null
         this.inputJson     = null
         this._isInvalid    = false
+        this._topKeys      = []
         this._keys         = []
         this._keyLengths   = {}
         this._valueLengths = {}
