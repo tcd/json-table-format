@@ -1,8 +1,8 @@
 import { fixString } from "fixjson"
 
-import { v1 } from "./lib"
+import { v2 } from "./lib"
 
 export const format = (input: string): string => {
     let formattedString = fixString(input)
-    return v1(formattedString)
+    return v2(formattedString)
 }

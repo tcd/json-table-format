@@ -1,5 +1,5 @@
 {
-    "extends": "../tsconfig.json",
+    "extends": "./tsconfig.json",
     "compilerOptions": {
         "baseUrl": "./",
         "module": "CommonJS",
@@ -15,7 +15,10 @@
             "node",
             "mocha",
             "chai",
-        ]
+        ],
+        "paths": {
+            "@cases": ["./cases/index.ts"],
+        },
     },
     "exclude": [
         "../node_modules",

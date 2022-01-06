@@ -2,23 +2,46 @@
     "name": "json-table-format",
     "description": "Format JSON in a compact, readable, aligned way.",
     "version": "0.0.0",
-    "author": "Clay Dunston <dunstontc@gmail.com>",
     "license": "MIT",
-    "keywords": [ "JSON", "json" ],
+    "author": "Clay Dunston <dunstontc@gmail.com>",
+    "homepage": "https://github.com/tcd/json-table-format#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tcd/json-table-format.git"
+    },
+    "keywords": [
+        "JSON",
+        "json",
+        "formatter",
+        "align",
+        "aligned"
+    ],
+    "bin": {
+        "json-table-format": "bin/main.js"
+    },
+    "files": [
+        "bin/main.js",
+        "index.js",
+        "index.d.ts",
+        "LICENSE.md"
+    ],
     "scripts": {
         "build": "exho 'no build script yet",
         "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts"
     },
     "dependencies": {
+        "fixjson": "^1.1.2",
+        "lodash": "^4.17.21",
         "ts-node": "^10.2.1",
         "tsconfig-paths": "^3.11.0",
         "typescript": "^4.4.3"
-      },
-      "devDependencies": {
+    },
+    "devDependencies": {
         "@types/chai": "^4.2.22",
+        "@types/lodash": "^4.14.178",
         "@types/mocha": "^9.0.0",
         "@types/node": "^16.9.1",
         "chai": "^4.3.4",
         "mocha": "^9.1.3"
-      }
+    }
 }

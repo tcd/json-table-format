@@ -24,5 +24,15 @@ export const CASE_1 = {
     "lastName":  { "type": "string",  "description": "The person's last name." },
     "age":       { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "minimum": 0 }
 }
-`
+`,
+    keys: [
+        "type",
+        "description",
+        "minimum",
+    ],
+    keyLengths: {
+        "type": 7,
+        "description": 59,
+        "minimum": 1,
+    },
 }
