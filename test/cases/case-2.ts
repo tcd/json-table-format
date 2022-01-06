@@ -4,25 +4,31 @@ export const CASE_2 = {
 [
     {
         "type": "string",
-        "description": "The person's first name."
+        "description": "The person's first name.",
+        "required": true,
+        "optional": false
     },
     {
         "type": "string",
-        "description": "The person's last name."
+        "description": "The person's last name.",
+        "required": true,
+        "optional": false
     },
     {
-        "description": "Age in years which must be equal to or greater than zero.",
         "type": "integer",
-        "minimum": 0
+        "description": "Age in years which must be equal to or greater than zero.",
+        "required": false,
+        "optional": true,
+        "minimum": 0,
     }
 ]
 `,
     output:
 `
 [
-    { "type": "string",  "description": "The person's first name." },
-    { "type": "string",  "description": "The person's last name." },
-    { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "minimum": 0 }
+    { "type": "string",  "description": "The person's first name.",                                  "required": true,  "optional": false              },
+    { "type": "string",  "description": "The person's last name.",                                   "required": true,  "optional": false              },
+    { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "required": false, "optional": true, "minimum": 0 }
 ]
 `
 }

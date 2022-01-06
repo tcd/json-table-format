@@ -2,5 +2,16 @@
     "compilerOptions": {
         "module": "CommonJS",
         "esModuleInterop": true,
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@cases": ["./test/cases/index.ts"],
+        },
+        "types": [
+            "node",
+            "mocha",
+            "chai",
+        ],
+        "downlevelIteration": true,
     },
 }
