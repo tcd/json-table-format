@@ -19,7 +19,7 @@ export const CASE_2 = {
         "description": "Age in years which must be equal to or greater than zero.",
         "required": false,
         "optional": true,
-        "minimum": 0,
+        "minimum": 0
     }
 ]
 `,
