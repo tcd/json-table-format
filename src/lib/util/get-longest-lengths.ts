@@ -1,4 +1,7 @@
-import { MeasurableJsonArrayType } from "@types"
+import {
+    MeasurableJsonArrayType,
+    MeasurableJsonObjectType,
+} from "@types"
 import {
     getKeys,
     getLength,
@@ -23,6 +26,46 @@ export const getLongestValueLengths = (x: MeasurableJsonArrayType): any => {
     }
     return result
 }
+
+export const getLongestValueLengths_array = (x: MeasurableJsonArrayType): any => {
+    let result = {}
+    let keys = getKeys(x)
+    for (let object of x) {
+        for (let key of keys) {
+            let longestLength = result[key]
+            let value = object[key]
+            let currentLength = getLength(value)
+            if (
+                   longestLength === null
+                || longestLength === undefined
+                || currentLength > longestLength
+            ) {
+                result[key] = currentLength
+            }
+        }
+    }
+    return result
+}
+
+// export const getLongestValueLengths_object = (x: MeasurableJsonObjectType): any => {
+//     let result = {}
+//     let keys = getKeys(x)
+//     for (let object of x) {
+//         for (let key of keys) {
+//             let longestLength = result[key]
+//             let value = object[key]
+//             let currentLength = getLength(value)
+//             if (
+//                    longestLength === null
+//                 || longestLength === undefined
+//                 || currentLength > longestLength
+//             ) {
+//                 result[key] = currentLength
+//             }
+//         }
+//     }
+//     return result
+// }
 
 export const getLongestKeyLengths_2 = (x: MeasurableJsonArrayType): any => {
     let result = {}

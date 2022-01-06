@@ -19,5 +19,40 @@ export const CASE_3 = {
     "Light":     { "id": 11, "name": "Light",     "physical": false, "elemental": true,  "game_order": 11 },
     "Dark":      { "id": 12, "name": "Dark",      "physical": false, "elemental": true,  "game_order": 12 }
 }
-`
+`,
+    topKeys: [
+        "Sword",
+        "Spear",
+        "Dagger",
+        "Axe",
+        "Bow",
+        "Staff",
+        "Fire",
+        "Ice",
+        "Lightning",
+        "Wind",
+        "Light",
+        "Dark",
+    ],
+    keys: [
+        "id",
+        "name",
+        "physical",
+        "elemental",
+        "game_order",
+    ],
+    keyLengths: {
+        "id": 4,
+        "name": 6,
+        "physical": 10,
+        "elemental": 11,
+        "game_order": 12,
+    },
+    valueLengths: {
+        "id": 2,
+        "name": 11,
+        "physical": 5,
+        "elemental": 5,
+        "game_order": 2,
+    },
 }

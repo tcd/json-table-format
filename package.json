@@ -26,6 +26,7 @@
         "LICENSE.md"
     ],
     "scripts": {
+        "start": "exho 'no start script yet",
         "build": "exho 'no build script yet",
         "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts"
     },
