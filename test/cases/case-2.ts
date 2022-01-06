@@ -39,6 +39,13 @@ export const CASE_2 = {
         "minimum",
     ],
     keyLengths: {
+        "type": 6,
+        "description": 13,
+        "required": 10,
+        "optional": 10,
+        "minimum": 9,
+    },
+    valueLengths: {
         "type": 9,
         "description": 59,
         "required": 5,

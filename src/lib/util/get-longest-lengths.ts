@@ -1,13 +1,17 @@
-import { getKeys, getValueLength } from "@lib"
+import { MeasurableJsonArrayType } from "@types"
+import {
+    getKeys,
+    getLength,
+} from "@lib"
 
-export const getKeyLengths = (x): any => {
+export const getLongestValueLengths = (x: MeasurableJsonArrayType): any => {
     let result = {}
     let keys = getKeys(x)
     for (let object of x) {
         for (let key of keys) {
             let longestLength = result[key]
             let value = object[key]
-            let currentLength = getValueLength(value)
+            let currentLength = getLength(value)
             if (
                    longestLength === null
                 || longestLength === undefined
@@ -20,20 +24,19 @@ export const getKeyLengths = (x): any => {
     return result
 }
 
-export const getValueLengths_2 = (x: any): any => {
+export const getLongestKeyLengths_2 = (x: MeasurableJsonArrayType): any => {
     let result = {}
     let keys = getKeys(x)
     for (let key of keys) {
-        result[key] = getValueLength(key)
+        result[key] = getLength(key)
     }
     return result
 }
 
-// export const getValueLengths_1 = (x: string[]): any => {
-//     let result = {}
-//     let keys = getKeys(x)
-//     for (let key of keys) {
-//         result[key] = getValueLength(key)
-//     }
-//     return result
-// }
+export const getLongestKeyLengths_1 = (values: string[]): any => {
+    let result = {}
+    for (let value of values) {
+        result[value] = getLength(value)
+    }
+    return result
+}

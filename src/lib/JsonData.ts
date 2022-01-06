@@ -1,5 +1,13 @@
-import { JsonDataType, Lengths } from "@types"
-import { determineJsonDataType, getKeys } from "@lib"
+import {
+    JsonDataType,
+    Lengths
+} from "@types"
+import {
+    determineJsonDataType,
+    getKeys,
+    getLongestKeyLengths_1,
+    getLongestValueLengths
+} from "@lib"
 
 export class JsonData {
 
@@ -53,6 +61,8 @@ export class JsonData {
         }
 
         this._keys = getKeys(this.inputJson)
+        this._keyLengths = getLongestKeyLengths_1(this._keys)
+        this._valueLengths = getLongestValueLengths(this.inputJson)
     }
 
     private _setDefaultPropertyValues() {

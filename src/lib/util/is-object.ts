@@ -12,3 +12,16 @@ export const isObject = (x: any): boolean => {
 
     return true
 }
+
+export const isMeasurable = (x: any): boolean => {
+
+    if (x === null)      { return true }
+    if (x === undefined) { return true }
+
+    if (isString(x))      { return true }
+    if (isNumber(x))      { return true }
+    if (isBoolean(x))     { return true }
+    if (Array.isArray(x)) { return true }
+
+    return false
+}

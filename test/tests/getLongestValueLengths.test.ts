@@ -1,10 +1,10 @@
 import { assert } from "chai"
 
-import { getKeyLengths } from "@lib"
+import { getLongestValueLengths } from "@lib"
 
 import * as cases from "@cases"
 
-describe("getKeyLengths()", function () {
+describe("getLongestValueLengths()", function () {
 
         // it("case 1", function () {
         //     let caseData = cases.CASE_1
@@ -15,10 +15,9 @@ describe("getKeyLengths()", function () {
 
         it("case 2", function () {
             let caseData = cases.CASE_2
-            const want: any = caseData.keyLengths
-            const have: any = getKeyLengths(JSON.parse(caseData.input))
+            const want: any = caseData.valueLengths
+            const have: any = getLongestValueLengths(JSON.parse(caseData.input))
             assert.deepEqual(have, want)
         })
-
 
 })

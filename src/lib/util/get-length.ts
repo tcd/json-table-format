@@ -1,4 +1,7 @@
-import { isString, isNumber } from "lodash"
+import {
+    isString,
+    isNumber,
+} from "lodash"
 
 export const VALUE_LENGTHS = {
     "true":  4,
@@ -6,8 +9,10 @@ export const VALUE_LENGTHS = {
     "null":  4,
 }
 
-/** Returns the length of a value when represented in JSON */
-export const getValueLength = (x: any): number => {
+/**
+ * Returns the length of a value when represented in JSON
+ */
+export const getLength = (x: any): number => {
 
     if (x === undefined)  { return -1 }
     if (Array.isArray(x)) { return -1 }

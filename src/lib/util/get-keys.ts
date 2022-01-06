@@ -1,9 +1,11 @@
+import { MeasurableJsonArrayType } from "@types"
+
 /**
  * Given an array of objects, returns a unique array of all keys contained in the objects.
  *
  * @param x an array of objects.
  */
-export const getKeys = (x: object[]): string[] => {
+export const getKeys = (x: MeasurableJsonArrayType): string[] => {
     try {
         const notUniqueKeys = x.flatMap(x => Object.keys(x))
         const uniqueKeys = [...new Set(notUniqueKeys)]
