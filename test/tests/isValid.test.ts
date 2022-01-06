@@ -1,6 +1,6 @@
 import { assert } from "chai"
 
-import { isValid } from "@src/lib"
+import { isValid } from "@lib"
 
 import * as cases from "@cases"
 

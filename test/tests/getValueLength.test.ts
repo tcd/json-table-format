@@ -1,6 +1,6 @@
 import { assert } from "chai"
 
-import { getValueLength } from "@src/lib"
+import { getValueLength } from "@lib"
 
 describe("getValueLength()", function () {
 

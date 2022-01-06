@@ -1,4 +1,4 @@
-import { isObject } from "."
+import { isObject } from "@lib"
 
 export const isJsonObjectArray = (x: any): boolean => {
     if (!Array.isArray(x)) {

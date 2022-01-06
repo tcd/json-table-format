@@ -1,6 +1,6 @@
 import { assert } from "chai"
 
-import { getKeyLengths } from "@src/lib"
+import { getKeyLengths } from "@lib"
 
 import * as cases from "@cases"
 
