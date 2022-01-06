@@ -1,4 +1,7 @@
+import { JsonDataType } from "@types"
+
 export const CASE_2 = {
+    type: JsonDataType.ARRAY,
     input:
 `
 [

@@ -1,24 +1,31 @@
 import { JsonDataType } from "@types"
-import { isObject } from "@lib"
+import {
+    isMeasurable,
+    isObject
+} from "@lib"
 
-export const determineJsonDataType = (x: object): JsonDataType => {
+export const determineJsonDataType = (json: object): JsonDataType => {
 
-    if (JSON.stringify(x) === "{}") {
+    if (JSON.stringify(json) === "{}") {
         return JsonDataType.OTHER
     }
 
-    if (isJsonArray(x)) {
+    if (isJsonArray(json)) {
         return JsonDataType.ARRAY
+    }
+
+    if (isJsonObjectArray(json)) {
+        return JsonDataType.OBJECT
     }
 
     return JsonDataType.OTHER
 }
 
-const isJsonArray = (x: object): boolean => {
-    if (!Array.isArray(x)) {
+const isJsonArray = (json: object): boolean => {
+    if (!Array.isArray(json)) {
         return false
     }
-    for (let y of x) {
+    for (let y of json) {
         if (!isObject(y)) {
             return false
         }
@@ -26,13 +33,15 @@ const isJsonArray = (x: object): boolean => {
     return true
 }
 
-const isJsonObjectArray = (x: object): boolean => {
-    if (!Array.isArray(x)) {
+const isJsonObjectArray = (json: object): boolean => {
+    if (Array.isArray(json)) {
         return false
     }
-    for (let y of x) {
-        if (!isObject(y)) {
-            return false
+    for (let object in json) {
+        for (let value of object) {
+            if (!isMeasurable(value)) {
+                return false
+            }
         }
     }
     return true

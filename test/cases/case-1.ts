@@ -1,4 +1,7 @@
+import { JsonDataType } from "@types"
+
 export const CASE_1 = {
+    type: JsonDataType.OBJECT,
     input:
 `
 {

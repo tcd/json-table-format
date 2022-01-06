@@ -3,7 +3,7 @@ import { assert } from "chai"
 import { getLength } from "@lib"
 
 describe("getLength()", () => {
-    describe("exceptions", () => {
+    describe("invalid cases", () => {
         it("returns '-1' for undefined", () => { assert.equal(getLength(undefined), -1) })
         it("returns '-1' for arrays",    () => { assert.equal(getLength([1, 2, 3]), -1) })
     })
