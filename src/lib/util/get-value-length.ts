@@ -1,5 +1,11 @@
 import { isString, isNumber } from "lodash"
 
+export const VALUE_LENGTHS = {
+    "true":  4,
+    "false": 5,
+    "null":  4,
+}
+
 /** Returns the length of a value when represented in JSON */
 export const getValueLength = (x: any): number => {
 

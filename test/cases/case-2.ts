@@ -39,7 +39,7 @@ export const CASE_2 = {
         "minimum",
     ],
     keyLengths: {
-        "type": 7,
+        "type": 9,
         "description": 59,
         "required": 5,
         "optional": 5,
