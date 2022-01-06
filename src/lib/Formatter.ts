@@ -29,7 +29,6 @@ export class Formatter {
     public _longestTopKeyLength?: number
 
     public _isInvalid: boolean
-    public _errors: any[]
 
     constructor(inputString: string) {
         this._setDefaultPropertyValues()
@@ -55,7 +54,6 @@ export class Formatter {
             let inputJson = JSON.parse(this.inputString)
             this.inputJson = inputJson
         } catch (error) {
-            this._errors.push(error)
             this._isInvalid = true
             return
         }
@@ -101,7 +99,6 @@ export class Formatter {
         this._keys         = []
         this._keyLengths   = {}
         this._valueLengths = {}
-        this._errors       = []
     }
 
     public dumpProperties(): any {
@@ -116,7 +113,6 @@ export class Formatter {
             _topKeys: this._topKeys,
             _longestTopKeyLength: this._longestTopKeyLength,
             _isInvalid: this._isInvalid,
-            _errors: this._errors,
         }
     }
 }
