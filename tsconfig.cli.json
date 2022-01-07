@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "sourceMap": false,
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@lib":   ["./src/lib/index.ts"],
+            "@types": ["./src/types/index.ts"],
+            "@cases": ["./test/cases/index.ts"],
+        },
+        "types": [ "node" ],
+        "outDir": "dist"
+    },
+    "include": [
+        "src/**/*",
+    ],
+}
+
+// "compilerOptions": {
+//     "preserveConstEnums": true,
+//     "noImplicitAny": true,
+//     "noImplicitReturns": true,
+//     "noImplicitThis": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "noEmitOnError": true,
+//     "strictNullChecks": true,
+//     "sourceMap": true,
+//   },
