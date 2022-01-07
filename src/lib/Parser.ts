@@ -16,12 +16,11 @@ import { Processor } from "./Processor"
 export class Parser extends Processor {
 
     public jsonDataType: JsonDataType
-    public output: string
     public isInvalid: boolean
 
     constructor(inputString: string) {
         super()
-        this.output = ""
+        this.isInvalid = false
         this.jsonDataType = JsonDataType.OTHER
         this.inputString = inputString
         this._parseJson()
@@ -65,7 +64,7 @@ export class Parser extends Processor {
 
         switch (this.jsonDataType) {
             case JsonDataType.ARRAY:
-                new ArrayFormatter(this).format()
+                this._parseArray()
                 break
             case JsonDataType.OBJECT:
                 this._parseObject()
@@ -88,69 +87,9 @@ export class Parser extends Processor {
         this.topKeys      = getTopKeys(this.inputJson)
     }
 
-    private _formatArray(): void {
-        this._addToOutput("[\n")
-        let topEntryCount = Object.entries(this.inputJson).length
-        let i = 1
-        for (let object of this.inputJson) {
-            let isLastTopEntry = (i === topEntryCount)
-            let objectEntries = Object.entries(object)
-            let entryCount    = objectEntries.length
-            let j = 1
-            this._addToOutput("    {")
-            for (const [key, value] of objectEntries) {
-                let isLastEntry = (j === entryCount)
-                let longestKeyLength = this.keyLengths[key] + 1
-                let longestValueLength = this.valueLengths[key] + 2
-
-                let keyText = ""
-                keyText += " "
-                keyText += `"${key}":`.padEnd(longestKeyLength, " ")
-
-                let valueText = ""
-                if (isString(value)) {
-                    valueText += ` "${value}",`.padEnd(longestValueLength, " ")
-                } else if (isNumber(value)) {
-                    valueText += ` ${value},`.padStart(longestValueLength, " ")
-                } else {
-                    valueText += ` ${value},`.padEnd(longestValueLength, " ")
-                }
-                if (isLastEntry) {
-                    valueText = valueText.replace(/,(\s*)$/, (...args) => args[1])
-                }
-
-                this._addToOutput(keyText)
-                this._addToOutput(valueText)
-
-                j++
-            }
-            if (isLastTopEntry) {
-                this._addToOutput(" }\n")
-            } else {
-                this._addToOutput(" },\n")
-            }
-            i++
-        }
-        this._addToOutput("]\n")
-    }
-
-    private _formatObject(): void {
-        this._addToOutput("{\n")
-        this._addToOutput("}\n")
-    }
-
-    private _addToOutput(string: string) {
-        this.output = this.output + string
-    }
-
-    private _removeFromOutput(length: number) {
-        this.output = this.output.slice(0, (length * -1))
-    }
-
     public dumpProperties(): any {
         return {
             ...super.dumpProperties(),
-            output: this.output,
             jsonDataType: this.jsonDataType,
             isInvalid: this.isInvalid,
         }

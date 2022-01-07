@@ -4,13 +4,13 @@ import { Processor } from "./Processor"
 
 export class ArrayFormatter extends Processor {
 
-    public parser: Parser
     public output: string
+    public parser: Parser
 
     constructor(parser: Parser) {
         super()
-        this.parser       = parser
         this.output       = ""
+        this.parser       = parser
         this.inputJson    = parser.inputJson
         this.topKeys      = parser.topKeys
         this.keys         = parser.keys
