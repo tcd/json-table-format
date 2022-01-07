@@ -21,14 +21,16 @@ export class Formatter {
 
     public jsonDataType: JsonDataType
 
-    public _keys: string[]
-    public _keyLengths?: Lengths
-    public _valueLengths?: Lengths
+    public elementCount?: number
 
-    public _topKeys?: string[]
-    public _longestTopKeyLength?: number
+    public keys: string[]
+    public keyLengths?: Lengths
+    public valueLengths?: Lengths
 
-    public _isInvalid: boolean
+    public topKeys?: string[]
+    public longestTopKeyLength?: number
+
+    public isInvalid: boolean
 
     constructor(inputString: string) {
         this._setDefaultPropertyValues()
@@ -38,11 +40,21 @@ export class Formatter {
 
     public format(): string {
         if (!this.isValid()) { return this.output }
+        switch (this.jsonDataType) {
+            case JsonDataType.ARRAY:
+                this._formatArray()
+                break
+            case JsonDataType.OBJECT:
+                this._formatObject()
+                break
+            default:
+                break
+        }
         return this.output
     }
 
     public isValid(): boolean {
-        if (this._isInvalid) { return false }
+        if (this.isInvalid) { return false }
         if (this.jsonDataType === JsonDataType.OTHER)  { return false }
         if (this.jsonDataType === JsonDataType.OBJECT) { return true  }
         if (this.jsonDataType === JsonDataType.ARRAY)  { return true  }
@@ -54,7 +66,7 @@ export class Formatter {
             let inputJson = JSON.parse(this.inputString)
             this.inputJson = inputJson
         } catch (error) {
-            this._isInvalid = true
+            this.isInvalid = true
             return
         }
 
@@ -77,28 +89,47 @@ export class Formatter {
     }
 
     private _parseArray(): void {
-        this._keys = getKeys_array(this.inputJson)
-        this._keyLengths = getLongestKeyLengths_1(this._keys)
-        this._valueLengths = getLongestValueLengths_array(this.inputJson)
+        this.keys = getKeys_array(this.inputJson)
+        this.keyLengths = getLongestKeyLengths_1(this.keys)
+        this.valueLengths = getLongestValueLengths_array(this.inputJson)
     }
 
     private _parseObject(): void {
-        this._keys = getKeys_object(this.inputJson)
-        this._topKeys = getTopKeys(this.inputJson)
-        this._keyLengths = getLongestKeyLengths_1(this._keys)
-        this._valueLengths = getLongestValueLengths_object(this.inputJson)
+        this.keys = getKeys_object(this.inputJson)
+        this.topKeys = getTopKeys(this.inputJson)
+        this.keyLengths = getLongestKeyLengths_1(this.keys)
+        this.valueLengths = getLongestValueLengths_object(this.inputJson)
     }
+
+    private _formatArray(): void {
+        this._addToOutput("[")
+        this._addToOutput("\n")
+        this._addToOutput("]")
+        this._addToOutput("\n")
+    }
+
+    private _formatObject(): void {
+        this._addToOutput("{")
+        this._addToOutput("\n")
+        this._addToOutput("{")
+        this._addToOutput("\n")
+    }
+
+    private _addToOutput(string: string) {
+        this.output = this.output + string
+    }
+
 
     private _setDefaultPropertyValues() {
         this.jsonDataType  = JsonDataType.OTHER
-        this.output        = null
+        this.output        = ""
         this.inputString   = null
         this.inputJson     = null
-        this._isInvalid    = false
-        this._topKeys      = []
-        this._keys         = []
-        this._keyLengths   = {}
-        this._valueLengths = {}
+        this.isInvalid    = false
+        this.topKeys      = []
+        this.keys         = []
+        this.keyLengths   = {}
+        this.valueLengths = {}
     }
 
     public dumpProperties(): any {
@@ -107,12 +138,13 @@ export class Formatter {
             inputString: this.inputString,
             inputJson: this.inputJson,
             jsonDataType: this.jsonDataType,
-            _keys: this._keys,
-            _keyLengths: this._keyLengths,
-            _valueLengths: this._valueLengths,
-            _topKeys: this._topKeys,
-            _longestTopKeyLength: this._longestTopKeyLength,
-            _isInvalid: this._isInvalid,
+            elementCount: this.elementCount,
+            keys: this.keys,
+            keyLengths: this.keyLengths,
+            valueLengths: this.valueLengths,
+            topKeys: this.topKeys,
+            longestTopKeyLength: this.longestTopKeyLength,
+            isInvalid: this.isInvalid,
         }
     }
 }

@@ -11,10 +11,10 @@ describe("Formatter", function () {
         let f = new Formatter(caseData.input)
         f.format()
         assert.equal(f.jsonDataType, JsonDataType.OBJECT)
-        assert.sameMembers(f._keys, caseData.keys)
-        assert.sameMembers(f._topKeys, caseData.topKeys)
-        assert.deepEqual(f._keyLengths, caseData.keyLengths)
-        assert.deepEqual(f._valueLengths, caseData.valueLengths)
+        assert.sameMembers(f.keys, caseData.keys)
+        assert.sameMembers(f.topKeys, caseData.topKeys)
+        assert.deepEqual(f.keyLengths, caseData.keyLengths)
+        assert.deepEqual(f.valueLengths, caseData.valueLengths)
     })
 
     it("case 2 - ARRAY", function () {
@@ -22,9 +22,9 @@ describe("Formatter", function () {
         let f = new Formatter(caseData.input)
         f.format()
         assert.equal(f.jsonDataType, JsonDataType.ARRAY)
-        assert.sameMembers(f._keys, caseData.keys)
-        assert.deepEqual(f._keyLengths, caseData.keyLengths)
-        assert.deepEqual(f._valueLengths, caseData.valueLengths)
+        assert.sameMembers(f.keys, caseData.keys)
+        assert.deepEqual(f.keyLengths, caseData.keyLengths)
+        assert.deepEqual(f.valueLengths, caseData.valueLengths)
     })
 
     it("case 3 - OBJECT", function () {
@@ -32,10 +32,10 @@ describe("Formatter", function () {
         let f = new Formatter(caseData.input)
         f.format()
         assert.equal(f.jsonDataType, JsonDataType.OBJECT)
-        assert.sameMembers(f._keys, caseData.keys)
-        assert.sameMembers(f._topKeys, caseData.topKeys)
-        assert.deepEqual(f._keyLengths, caseData.keyLengths)
-        assert.deepEqual(f._valueLengths, caseData.valueLengths)
+        assert.sameMembers(f.keys, caseData.keys)
+        assert.sameMembers(f.topKeys, caseData.topKeys)
+        assert.deepEqual(f.keyLengths, caseData.keyLengths)
+        assert.deepEqual(f.valueLengths, caseData.valueLengths)
     })
 
 })
