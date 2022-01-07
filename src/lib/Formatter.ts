@@ -150,6 +150,9 @@ export class Formatter {
 
                 let keyText = ""
                 keyText += " "
+                if (!isLastEntry) {
+                    // longestKeyLength += 1
+                }
                 keyText += `"${key}":`.padEnd(longestKeyLength, " ")
 
                 let valueText = ""
@@ -161,7 +164,10 @@ export class Formatter {
                     valueText += ` ${value},`.padEnd(longestValueLength, " ")
                 }
                 if (isLastEntry) {
-                    valueText = valueText.slice(0, -1)
+                    valueText = valueText.replace(/,(\s*)$/, (...args) => {
+                        // console.log(args)
+                        return args[1]
+                    })
                 }
 
                 this._addToOutput(keyText)

@@ -28,7 +28,9 @@
     "scripts": {
         "start": "exho 'no start script yet",
         "build": "exho 'no build script yet",
-        "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts"
+        "test": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts",
+        "test:inline": "mocha --inline-diffs --require ts-node/register --require tsconfig-paths/register test/**/*.test.ts",
+        "test:files": "mocha --require ts-node/register --require tsconfig-paths/register"
     },
     "dependencies": {
         "fixjson": "^1.1.2",

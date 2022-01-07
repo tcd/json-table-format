@@ -15,7 +15,7 @@ describe("Formatter", function () {
         assert.sameMembers(f.topKeys, caseData.topKeys)
         assert.deepEqual(f.keyLengths, caseData.keyLengths)
         assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        // assert.equal(f.output, caseData.output)
+        // assert.equal(f.output.trim(), caseData.output.trim())
     })
 
     it("case 2 - ARRAY", function () {
@@ -26,7 +26,7 @@ describe("Formatter", function () {
         assert.sameMembers(f.keys, caseData.keys)
         assert.deepEqual(f.keyLengths, caseData.keyLengths)
         assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        assert.equal(f.output, caseData.output)
+        assert.equal(f.output.trim(), caseData.output.trim())
     })
 
     it("case 3 - OBJECT", function () {
@@ -38,7 +38,7 @@ describe("Formatter", function () {
         assert.sameMembers(f.topKeys, caseData.topKeys)
         assert.deepEqual(f.keyLengths, caseData.keyLengths)
         assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        // assert.equal(f.output, caseData.output)
+        // assert.equal(f.output.trim(), caseData.output.trim())
     })
 
     it("case 4 - ARRAY", function () {
@@ -49,7 +49,7 @@ describe("Formatter", function () {
         assert.sameMembers(f.keys, caseData.keys)
         assert.deepEqual(f.keyLengths, caseData.keyLengths)
         assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        assert.equal(f.output, caseData.output)
+        assert.equal(f.output.trim(), caseData.output.trim())
     })
 
 })

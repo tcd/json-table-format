@@ -12,6 +12,13 @@ export const CASE_2 = {
         "optional": false
     },
     {
+        "type": "integer",
+        "description": "Age in years which must be equal to or greater than zero.",
+        "required": false,
+        "optional": true,
+        "minimum": 0
+    },
+    {
         "type": "string",
         "description": "The person's last name.",
         "required": true,
@@ -19,19 +26,20 @@ export const CASE_2 = {
     },
     {
         "type": "integer",
-        "description": "Age in years which must be equal to or greater than zero.",
-        "required": false,
+        "description": "Favorite number",
+        "required": true,
         "optional": true,
-        "minimum": 0
+        "maximum": 0
     }
 ]
 `,
     output:
 `
 [
-    { "type": "string",  "description": "The person's first name.",                                  "required": true,  "optional": false              },
-    { "type": "string",  "description": "The person's last name.",                                   "required": true,  "optional": false              },
-    { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "required": false, "optional": true, "minimum": 0 }
+    { "type": "string",  "description": "The person's first name.",                                  "required": true,  "optional": false },
+    { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "required": false, "optional": true,  "minimum": 0 },
+    { "type": "string",  "description": "The person's last name.",                                   "required": true,  "optional": false },
+    { "type": "integer", "description": "Favorite number",                                           "required": true,  "optional": true,  "maximum": 0 }
 ]
 `,
     keys: [
@@ -40,6 +48,7 @@ export const CASE_2 = {
         "required",
         "optional",
         "minimum",
+        "maximum",
     ],
     keyLengths: {
         "type": 6,
@@ -47,6 +56,7 @@ export const CASE_2 = {
         "required": 10,
         "optional": 10,
         "minimum": 9,
+        "maximum": 9,
     },
     valueLengths: {
         "type": 9,
@@ -54,5 +64,6 @@ export const CASE_2 = {
         "required": 5,
         "optional": 5,
         "minimum": 1,
+        "maximum": 1,
     },
 }
