@@ -1,3 +1,4 @@
+import { isNumber, isString } from "lodash"
 import {
     JsonDataType,
     Lengths
@@ -89,36 +90,107 @@ export class Formatter {
     }
 
     private _parseArray(): void {
-        this.keys = getKeys_array(this.inputJson)
-        this.keyLengths = getLongestKeyLengths_1(this.keys)
+        this.keys         = getKeys_array(this.inputJson)
+        this.keyLengths   = getLongestKeyLengths_1(this.keys)
         this.valueLengths = getLongestValueLengths_array(this.inputJson)
     }
 
     private _parseObject(): void {
-        this.keys = getKeys_object(this.inputJson)
-        this.topKeys = getTopKeys(this.inputJson)
-        this.keyLengths = getLongestKeyLengths_1(this.keys)
+        this.keys         = getKeys_object(this.inputJson)
+        this.keyLengths   = getLongestKeyLengths_1(this.keys)
         this.valueLengths = getLongestValueLengths_object(this.inputJson)
+        this.topKeys      = getTopKeys(this.inputJson)
+    }
+
+    private _formatArray_v1(): void {
+        this._addToOutput("[\n")
+        for (let object of this.inputJson) {
+            this._addToOutput("    {")
+            let objectEntries = Object.entries(object)
+            let entryCount    = objectEntries.length
+            let i = 1
+            for (const [key, value] of objectEntries) {
+                let isLastEntry = (i === entryCount)
+                let longestKeyLength = this.keyLengths[key] + 1
+                let longestValueLength = this.valueLengths[key] + 2
+                this._addToOutput(" ")
+                this._addToOutput(`"${key}":`.padEnd(longestKeyLength, " "))
+                // this._addToOutput(": ")
+                if (isString(value)) {
+                    this._addToOutput(` "${value}"`.padEnd(longestValueLength, " "))
+                    // this._addToOutput(",")
+                } else {
+                    this._addToOutput(` ${value}`.padEnd(longestValueLength, " "))
+                    // this._addToOutput(",")
+                }
+                if (isLastEntry) {
+                    this._removeFromOutput(1)
+                }
+                i++
+            }
+            this._addToOutput(" }\n")
+        }
+        this._addToOutput("]\n")
     }
 
     private _formatArray(): void {
-        this._addToOutput("[")
-        this._addToOutput("\n")
-        this._addToOutput("]")
-        this._addToOutput("\n")
+        this._addToOutput("[\n")
+        let topEntryCount = Object.entries(this.inputJson).length
+        let i = 1
+        for (let object of this.inputJson) {
+            let isLastTopEntry = (i === topEntryCount)
+            let objectEntries = Object.entries(object)
+            let entryCount    = objectEntries.length
+            let j = 1
+            this._addToOutput("    {")
+            for (const [key, value] of objectEntries) {
+                let isLastEntry = (j === entryCount)
+                let longestKeyLength = this.keyLengths[key] + 1
+                let longestValueLength = this.valueLengths[key] + 2
+
+                let keyText = ""
+                keyText += " "
+                keyText += `"${key}":`.padEnd(longestKeyLength, " ")
+
+                let valueText = ""
+                if (isString(value)) {
+                    valueText += ` "${value}",`.padEnd(longestValueLength, " ")
+                } else if (isNumber(value)) {
+                    valueText += ` ${value},`.padStart(longestValueLength, " ")
+                } else {
+                    valueText += ` ${value},`.padEnd(longestValueLength, " ")
+                }
+                if (isLastEntry) {
+                    valueText = valueText.slice(0, -1)
+                }
+
+                this._addToOutput(keyText)
+                this._addToOutput(valueText)
+
+                j++
+            }
+            if (isLastTopEntry) {
+                this._addToOutput(" }\n")
+            } else {
+                this._addToOutput(" },\n")
+            }
+            i++
+        }
+        this._addToOutput("]\n")
     }
 
     private _formatObject(): void {
-        this._addToOutput("{")
-        this._addToOutput("\n")
-        this._addToOutput("{")
-        this._addToOutput("\n")
+        this._addToOutput("{\n")
+        this._addToOutput("}\n")
     }
 
     private _addToOutput(string: string) {
         this.output = this.output + string
     }
 
+    private _removeFromOutput(length: number) {
+        this.output = this.output.slice(0, (length * -1))
+    }
 
     private _setDefaultPropertyValues() {
         this.jsonDataType  = JsonDataType.OTHER
@@ -148,3 +220,12 @@ export class Formatter {
         }
     }
 }
+
+// [
+//     { "type": "string",  "description":  "The person's first name.",                                "required":  true, "optional":  false, }
+//     { "type": "string",  "description":  "The person's last name.",                                 "required":  true, "optional":  false, }
+//     { "type": "integer", "description":  "Age in years which must be equal to or greater than zero.", "required":  false, "optional":  true, "minimum":  0, }
+//     { "type": "string",  "description": "The person's first name.",                                  "required": true,  "optional": false              },
+//     { "type": "string",  "description": "The person's last name.",                                   "required": true,  "optional": false              },
+//     { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "required": false, "optional": true, "minimum": 0 }
+// ]
