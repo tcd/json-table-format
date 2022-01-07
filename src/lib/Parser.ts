@@ -1,8 +1,5 @@
 import { isNumber, isString } from "lodash"
-import {
-    JsonDataType,
-    Lengths
-} from "@types"
+import { JsonDataType } from "@types"
 import {
     determineJsonDataType,
     getLongestKeyLengths_1,
@@ -11,47 +8,36 @@ import {
     getTopKeys,
     getLongestValueLengths_array,
     getLongestValueLengths_object,
+    ArrayFormatter,
 } from "@lib"
 
-export class Formatter {
+import { Processor } from "./Processor"
 
-    public output: string
-
-    public inputString: string
-    public inputJson: any
+export class Parser extends Processor {
 
     public jsonDataType: JsonDataType
-
-    public elementCount?: number
-
-    public keys: string[]
-    public keyLengths?: Lengths
-    public valueLengths?: Lengths
-
-    public topKeys?: string[]
-    public longestTopKeyLength?: number
-
+    public output: string
     public isInvalid: boolean
 
     constructor(inputString: string) {
-        this._setDefaultPropertyValues()
+        super()
+        this.output = ""
+        this.jsonDataType = JsonDataType.OTHER
         this.inputString = inputString
         this._parseJson()
     }
 
     public format(): string {
-        if (!this.isValid()) { return this.output }
+        let output = ""
+        if (!this.isValid()) { return output }
         switch (this.jsonDataType) {
             case JsonDataType.ARRAY:
-                this._formatArray()
-                break
+                return new ArrayFormatter(this).format()
             case JsonDataType.OBJECT:
-                this._formatObject()
-                break
+                return output
             default:
-                break
+                return output
         }
-        return this.output
     }
 
     public isValid(): boolean {
@@ -79,7 +65,7 @@ export class Formatter {
 
         switch (this.jsonDataType) {
             case JsonDataType.ARRAY:
-                this._parseArray()
+                new ArrayFormatter(this).format()
                 break
             case JsonDataType.OBJECT:
                 this._parseObject()
@@ -102,37 +88,6 @@ export class Formatter {
         this.topKeys      = getTopKeys(this.inputJson)
     }
 
-    private _formatArray_v1(): void {
-        this._addToOutput("[\n")
-        for (let object of this.inputJson) {
-            this._addToOutput("    {")
-            let objectEntries = Object.entries(object)
-            let entryCount    = objectEntries.length
-            let i = 1
-            for (const [key, value] of objectEntries) {
-                let isLastEntry = (i === entryCount)
-                let longestKeyLength = this.keyLengths[key] + 1
-                let longestValueLength = this.valueLengths[key] + 2
-                this._addToOutput(" ")
-                this._addToOutput(`"${key}":`.padEnd(longestKeyLength, " "))
-                // this._addToOutput(": ")
-                if (isString(value)) {
-                    this._addToOutput(` "${value}"`.padEnd(longestValueLength, " "))
-                    // this._addToOutput(",")
-                } else {
-                    this._addToOutput(` ${value}`.padEnd(longestValueLength, " "))
-                    // this._addToOutput(",")
-                }
-                if (isLastEntry) {
-                    this._removeFromOutput(1)
-                }
-                i++
-            }
-            this._addToOutput(" }\n")
-        }
-        this._addToOutput("]\n")
-    }
-
     private _formatArray(): void {
         this._addToOutput("[\n")
         let topEntryCount = Object.entries(this.inputJson).length
@@ -150,9 +105,6 @@ export class Formatter {
 
                 let keyText = ""
                 keyText += " "
-                if (!isLastEntry) {
-                    // longestKeyLength += 1
-                }
                 keyText += `"${key}":`.padEnd(longestKeyLength, " ")
 
                 let valueText = ""
@@ -164,10 +116,7 @@ export class Formatter {
                     valueText += ` ${value},`.padEnd(longestValueLength, " ")
                 }
                 if (isLastEntry) {
-                    valueText = valueText.replace(/,(\s*)$/, (...args) => {
-                        // console.log(args)
-                        return args[1]
-                    })
+                    valueText = valueText.replace(/,(\s*)$/, (...args) => args[1])
                 }
 
                 this._addToOutput(keyText)
@@ -198,40 +147,12 @@ export class Formatter {
         this.output = this.output.slice(0, (length * -1))
     }
 
-    private _setDefaultPropertyValues() {
-        this.jsonDataType  = JsonDataType.OTHER
-        this.output        = ""
-        this.inputString   = null
-        this.inputJson     = null
-        this.isInvalid    = false
-        this.topKeys      = []
-        this.keys         = []
-        this.keyLengths   = {}
-        this.valueLengths = {}
-    }
-
     public dumpProperties(): any {
         return {
+            ...super.dumpProperties(),
             output: this.output,
-            inputString: this.inputString,
-            inputJson: this.inputJson,
             jsonDataType: this.jsonDataType,
-            elementCount: this.elementCount,
-            keys: this.keys,
-            keyLengths: this.keyLengths,
-            valueLengths: this.valueLengths,
-            topKeys: this.topKeys,
-            longestTopKeyLength: this.longestTopKeyLength,
             isInvalid: this.isInvalid,
         }
     }
 }
-
-// [
-//     { "type": "string",  "description":  "The person's first name.",                                "required":  true, "optional":  false, }
-//     { "type": "string",  "description":  "The person's last name.",                                 "required":  true, "optional":  false, }
-//     { "type": "integer", "description":  "Age in years which must be equal to or greater than zero.", "required":  false, "optional":  true, "minimum":  0, }
-//     { "type": "string",  "description": "The person's first name.",                                  "required": true,  "optional": false              },
-//     { "type": "string",  "description": "The person's last name.",                                   "required": true,  "optional": false              },
-//     { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "required": false, "optional": true, "minimum": 0 }
-// ]
