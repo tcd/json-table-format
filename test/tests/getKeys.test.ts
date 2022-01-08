@@ -2,9 +2,9 @@ import { assert } from "chai"
 
 import {
     getKeys_object,
-} from "@lib"
+} from "../../src/lib"
 
-import * as cases from "@cases"
+import * as cases from "../cases"
 
 describe("getKeys()", function () {
     it("case 1 - OBJECT", function () {

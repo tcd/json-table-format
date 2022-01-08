@@ -3,8 +3,8 @@ import { assert } from "chai"
 import {
     getLongestValueLengths_array,
     getLongestValueLengths_object,
-} from "@lib"
-import * as cases from "@cases"
+} from "../../src/lib"
+import * as cases from "../cases"
 
 describe("getLongestValueLengths()", function () {
     it("case 1", function () {

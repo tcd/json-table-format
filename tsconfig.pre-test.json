@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "types": [
+            "node",
+            "mocha",
+            "chai"
+        ],
+        "module": "CommonJS",
+        "target": "es2015",
+        "esModuleInterop": true,
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "./build",
+    }
+}

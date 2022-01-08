@@ -1,6 +1,6 @@
 import { assert } from "chai"
 
-import { getLength } from "@lib"
+import { getLength } from "../../src/lib"
 
 describe("getLength()", function () {
     describe("invalid cases", function () {

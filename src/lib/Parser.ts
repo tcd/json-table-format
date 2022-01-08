@@ -1,4 +1,4 @@
-import { JsonDataType } from "@types"
+import { JsonDataType } from "../types"
 import {
     determineJsonDataType,
     getLongestKeyLengths_1,
@@ -7,10 +7,9 @@ import {
     getTopKeys,
     getLongestValueLengths_array,
     getLongestValueLengths_object,
-    ArrayFormatter,
-} from "@lib"
-
+} from "./util"
 import { Processor } from "./Processor"
+import { ArrayFormatter } from "./ArrayFormatter"
 
 export class Parser extends Processor {
 

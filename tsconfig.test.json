@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "types": [
+            "node",
+            "mocha",
+            "chai"
+        ]
+    }
+}

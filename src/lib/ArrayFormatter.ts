@@ -1,5 +1,5 @@
 import { isNumber, isString } from "lodash"
-import { Parser } from "@lib"
+import { Parser } from "./Parser"
 import { Processor } from "./Processor"
 
 export class ArrayFormatter extends Processor {

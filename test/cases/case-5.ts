@@ -1,4 +1,4 @@
-import { JsonDataType } from "@types"
+import { JsonDataType } from "../../src/types"
 
 export const CASE_5 = {
     type: JsonDataType.ARRAY,

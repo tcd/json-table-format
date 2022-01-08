@@ -1,8 +1,8 @@
 import { assert } from "chai"
 
-import { JsonDataType } from "@types"
-import { determineJsonDataType as func } from "@lib"
-import * as cases from "@cases"
+import { JsonDataType } from "../../src/types"
+import { determineJsonDataType as func } from "../../src/lib"
+import * as cases from "../cases"
 
 describe("determineJsonDataType()", function () {
     describe("invalid cases", function () {

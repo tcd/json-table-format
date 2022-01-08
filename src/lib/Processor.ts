@@ -1,4 +1,4 @@
-import { Lengths } from "@types"
+import { Lengths } from "../types"
 
 export class Processor {
 

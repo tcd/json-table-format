@@ -1,4 +1,4 @@
-import { JsonDataType } from "@types"
+import { JsonDataType } from "../../src/types"
 
 export const CASE_1 = {
     type: JsonDataType.OBJECT,

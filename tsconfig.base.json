@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@lib":   ["./src/lib/index.ts"],
+            "@types": ["./src/types/index.ts"],
+            "@cases": ["./test/cases/index.ts"]
+        },
+        "strict": false,
+        "downlevelIteration": true
+    }
+}
