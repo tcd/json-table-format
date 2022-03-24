@@ -20,8 +20,9 @@
     "engines": {
         "node": ">=8.0.0"
     },
+    "main": "./bin/main.mjs",
     "bin": {
-        "json-table-format": "bin/main.mjs"
+        "json-table-format": "./bin/main.mjs"
     },
     "files": [
         "bin/main.mjs",
@@ -39,6 +40,7 @@
     "dependencies": {
         "@rollup/plugin-commonjs": "^21.0.2",
         "fixjson": "^1.1.2",
+        "get-stdin": "^9.0.0",
         "lodash": "^4.17.21",
         "meow": "^10.1.2",
         "string-width": "^5.0.1",

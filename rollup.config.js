@@ -12,14 +12,14 @@ const config = {
     //     "./src/main.ts",
     //     "./src/Program.ts",
     // ],
-    input: "./src/main.ts",
+    input: "./src/cli/main.ts",
     output: [
-        {
-            // dir: "dist",
-            format: "cjs",
-            file: "./bin/json-table-format.js",
-            inlineDynamicImports: true,
-        },
+        // {
+        //     // dir: "dist",
+        //     format: "cjs",
+        //     file: "./bin/json-table-format.js",
+        //     inlineDynamicImports: true,
+        // },
         {
             // dir: "dist",
             format: "esm",
