@@ -32,6 +32,26 @@
 }
 ```
 
+
+## Usage
+
+First, install:
+
+```bash
+npm install -g json-table-format
+```
+
+Second, use:
+
+```bash
+# prints to STDOUT by default
+json-table-format ./path/to/file.json
+
+# or you can format the file in-place
+json-table-format ./path/to/file.json --overwrite
+```
+
+
 ## References
 
 - [JSON Lines](https://jsonlines.org/examples/)

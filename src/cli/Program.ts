@@ -1,7 +1,6 @@
-import { readFileSync } from "fs"
+import { readFileSync, writeFileSync } from "fs"
 import chalk from "chalk"
 import getStdin from "get-stdin"
-// import { writeFileSync } from "fs"
 
 import { InputSetting, OutputSetting, CliFlags, CliConfig } from "@types"
 import { Parser } from "@src/lib/Parser"
@@ -19,6 +18,10 @@ export class Program {
     public parser?: Parser
 
     constructor(args: any, flags: any) {
+        this.inputFile = null
+        this.inputString = null
+        this.outputString = null
+
         this.args   = args
         this.flags  = flags
         this.config = {
@@ -32,11 +35,9 @@ export class Program {
     public async main() {
         try {
             await this.getInput()
-            // console.log(this.inputString)
             this.parser = new Parser(this.inputString)
             this.outputString = new Parser(this.inputString).format()
-            // console.log(this.outputString)
-            console.log(this.parser.dumpProperties())
+            this.emitOutput()
             process.exit(0)
         } catch (e) {
             if (e.code == "ENOENT") {
@@ -54,6 +55,10 @@ export class Program {
         } else {
             this.inputFile = this.args[0]
         }
+
+        if (this.flags.overwrite == true) {
+            this.config.outputSetting = OutputSetting.OVERWRITE_FILE
+        }
     }
 
     private async getInput(): Promise<void> {
@@ -66,6 +71,29 @@ export class Program {
             return null
         }
         this.inputString = ""
+    }
+
+    private emitOutput(): void {
+        if (this.config.outputSetting == OutputSetting.STDOUT) {
+            console.log(this.outputString)
+            return null
+        }
+        if (this.flags.overwrite != true) {
+            console.log(this.outputString)
+            return null
+        }
+        if (this.flags.overwrite === true) {
+            if (this.outputString === null || this.outputString === "") {
+                return null
+            } else {
+                writeFileSync(this.inputFile, this.outputString)
+                console.log("file formatted: " + chalk.blue(this.inputFile))
+                return null
+            }
+        }
+        // TODO: check for errors if we get this far.
+        console.log(this.outputString)
+        return null
     }
 
 }
