@@ -4,7 +4,7 @@ import getStdin from "get-stdin"
 // import { writeFileSync } from "fs"
 
 import { InputSetting, OutputSetting, CliFlags, CliConfig } from "@types"
-import { Parser } from "@lib"
+import { Parser } from "@src/lib/Parser"
 
 export class Program {
 
@@ -15,6 +15,8 @@ export class Program {
     public inputFile?: string
     public inputString?: string
     public outputString?: string
+
+    public parser?: Parser
 
     constructor(args: any, flags: any) {
         this.args   = args
@@ -31,8 +33,10 @@ export class Program {
         try {
             await this.getInput()
             // console.log(this.inputString)
+            this.parser = new Parser(this.inputString)
             this.outputString = new Parser(this.inputString).format()
-            console.log(this.outputString)
+            // console.log(this.outputString)
+            console.log(this.parser.dumpProperties())
             process.exit(0)
         } catch (e) {
             if (e.code == "ENOENT") {

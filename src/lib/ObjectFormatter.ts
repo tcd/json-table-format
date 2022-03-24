@@ -5,7 +5,7 @@ const { isString, isNumber } = lodash
 import { Parser } from "./Parser"
 import { Processor } from "./Processor"
 
-export class ArrayFormatter extends Processor {
+export class ObjectFormatter extends Processor {
 
     public output: string
     public parser: Parser
@@ -19,18 +19,21 @@ export class ArrayFormatter extends Processor {
         this.keys         = parser.keys
         this.keyLengths   = parser.keyLengths
         this.valueLengths = parser.valueLengths
+        this.longestTopKeyLength = parser.longestTopKeyLength
     }
 
     public format(): string {
-        this._addToOutput("[\n")
+        this._addToOutput("{\n")
+        const indentLevel = 4
         let topEntryCount = Object.entries(this.inputJson).length
         let i = 1
-        for (let object of this.inputJson) {
+        for (let [topKey, object] of Object.entries(this.inputJson)) {
             let isLastTopEntry = (i === topEntryCount)
             let objectEntries  = Object.entries(object)
             let entryCount     = objectEntries.length
             let j = 1
-            this._addToOutput("    {")
+            this._addToOutput(`    "${topKey}":`.padEnd(this.longestTopKeyLength + indentLevel + 1, " "))
+            this._addToOutput(" {")
             for (const [key, value] of objectEntries) {
                 let isLastEntry        = (j === entryCount)
                 let longestKeyLength   = this.keyLengths[key] + 1
@@ -70,7 +73,7 @@ export class ArrayFormatter extends Processor {
             }
             i++
         }
-        this._addToOutput("]\n")
+        this._addToOutput("}\n")
         return this.output
     }
 

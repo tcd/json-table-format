@@ -7,7 +7,9 @@ import {
     getTopKeys,
     getLongestValueLengths_array,
     getLongestValueLengths_object,
+    getLongestLength,
     ArrayFormatter,
+    ObjectFormatter,
 } from "@lib"
 
 import { Processor } from "./Processor"
@@ -32,7 +34,7 @@ export class Parser extends Processor {
             case JsonDataType.ARRAY:
                 return new ArrayFormatter(this).format()
             case JsonDataType.OBJECT:
-                return output
+                return new ObjectFormatter(this).format()
             default:
                 return output
         }
@@ -52,6 +54,7 @@ export class Parser extends Processor {
             this.inputJson = inputJson
         } catch (error) {
             this.isInvalid = true
+            console.log("invalid json")
             return
         }
 
@@ -84,6 +87,7 @@ export class Parser extends Processor {
         this.keyLengths   = getLongestKeyLengths_1(this.keys)
         this.valueLengths = getLongestValueLengths_object(this.inputJson)
         this.topKeys      = getTopKeys(this.inputJson)
+        this.longestTopKeyLength = getLongestLength(this.topKeys)
     }
 
     public dumpProperties(): any {

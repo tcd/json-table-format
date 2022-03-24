@@ -30,7 +30,8 @@ const cli = meow(`
     },
 })
 
-new Program(
+// @ts-ignore:next-line
+await new Program(
     cli.input,
     cli.flags as unknown as CliConfig,
 ).main()

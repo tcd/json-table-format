@@ -47,6 +47,50 @@ var OutputSetting;
     OutputSetting["OVERWRITE_FILE"] = "overwrite-file";
 })(OutputSetting || (OutputSetting = {}));
 
+const { isString: isString$2, isNumber: isNumber$2, isBoolean } = lodash;
+const isObject = (x) => {
+    if (x === null) {
+        return false;
+    }
+    if (x === undefined) {
+        return false;
+    }
+    if (isString$2(x)) {
+        return false;
+    }
+    if (isNumber$2(x)) {
+        return false;
+    }
+    if (isBoolean(x)) {
+        return false;
+    }
+    if (Array.isArray(x)) {
+        return false;
+    }
+    return true;
+};
+const isMeasurable = (x) => {
+    if (x === null) {
+        return true;
+    }
+    if (x === undefined) {
+        return true;
+    }
+    if (isString$2(x)) {
+        return true;
+    }
+    if (isNumber$2(x)) {
+        return true;
+    }
+    if (isBoolean(x)) {
+        return true;
+    }
+    if (Array.isArray(x)) {
+        return true;
+    }
+    return false;
+};
+
 const determineJsonDataType = (json) => {
     if (JSON.stringify(json) === "{}") {
         return JsonDataType.OTHER;
@@ -118,6 +162,32 @@ const getTopKeys = (json) => {
     }
 };
 
+const { isString: isString$1, isNumber: isNumber$1 } = lodash;
+const getLength = (x) => {
+    if (x === undefined) {
+        return -1;
+    }
+    if (Array.isArray(x)) {
+        return -1;
+    }
+    if (x === null) {
+        return 4;
+    }
+    if (x === true) {
+        return 4;
+    }
+    if (x === false) {
+        return 5;
+    }
+    if (isString$1(x)) {
+        return x.length + 2;
+    }
+    if (isNumber$1(x)) {
+        return `${x}`.length;
+    }
+    return -1;
+};
+
 const getLongestValueLengths_array = (json) => {
     let result = {};
     let keys = getKeys_array(json);
@@ -147,76 +217,6 @@ const getLongestKeyLengths_1 = (values) => {
     return result;
 };
 
-const { isString: isString$2, isNumber: isNumber$2 } = lodash;
-const getLength = (x) => {
-    if (x === undefined) {
-        return -1;
-    }
-    if (Array.isArray(x)) {
-        return -1;
-    }
-    if (x === null) {
-        return 4;
-    }
-    if (x === true) {
-        return 4;
-    }
-    if (x === false) {
-        return 5;
-    }
-    if (isString$2(x)) {
-        return x.length + 2;
-    }
-    if (isNumber$2(x)) {
-        return `${x}`.length;
-    }
-    return -1;
-};
-
-const { isString: isString$1, isNumber: isNumber$1, isBoolean } = lodash;
-const isObject = (x) => {
-    if (x === null) {
-        return false;
-    }
-    if (x === undefined) {
-        return false;
-    }
-    if (isString$1(x)) {
-        return false;
-    }
-    if (isNumber$1(x)) {
-        return false;
-    }
-    if (isBoolean(x)) {
-        return false;
-    }
-    if (Array.isArray(x)) {
-        return false;
-    }
-    return true;
-};
-const isMeasurable = (x) => {
-    if (x === null) {
-        return true;
-    }
-    if (x === undefined) {
-        return true;
-    }
-    if (isString$1(x)) {
-        return true;
-    }
-    if (isNumber$1(x)) {
-        return true;
-    }
-    if (isBoolean(x)) {
-        return true;
-    }
-    if (Array.isArray(x)) {
-        return true;
-    }
-    return false;
-};
-
 class Processor {
     constructor() {
         this.inputString = null;
@@ -237,6 +237,73 @@ class Processor {
             topKeys: this.topKeys,
             longestTopKeyLength: this.longestTopKeyLength,
         };
+    }
+}
+
+const { isString, isNumber } = lodash;
+class ArrayFormatter extends Processor {
+    constructor(parser) {
+        super();
+        this.output = "";
+        this.parser = parser;
+        this.inputJson = parser.inputJson;
+        this.topKeys = parser.topKeys;
+        this.keys = parser.keys;
+        this.keyLengths = parser.keyLengths;
+        this.valueLengths = parser.valueLengths;
+    }
+    format() {
+        this._addToOutput("[\n");
+        let topEntryCount = Object.entries(this.inputJson).length;
+        let i = 1;
+        for (let object of this.inputJson) {
+            let isLastTopEntry = (i === topEntryCount);
+            let objectEntries = Object.entries(object);
+            let entryCount = objectEntries.length;
+            let j = 1;
+            this._addToOutput("    {");
+            for (const [key, value] of objectEntries) {
+                let isLastEntry = (j === entryCount);
+                let longestKeyLength = this.keyLengths[key] + 1;
+                let longestValueLength = this.valueLengths[key] + 2;
+                let keyText = "";
+                keyText += " ";
+                keyText += `"${key}":`.padEnd(longestKeyLength, " ");
+                let valueText = "";
+                if (isString(value)) {
+                    valueText += ` "${value}",`.padEnd(longestValueLength, " ");
+                }
+                else if (isNumber(value)) {
+                    valueText += ` ${value},`.padStart(longestValueLength, " ");
+                }
+                else {
+                    valueText += ` ${value},`.padEnd(longestValueLength, " ");
+                }
+                if (isLastEntry) {
+                    valueText = valueText.replace(/,(\s*)$/, (...args) => {
+                        return args[1];
+                    });
+                }
+                this._addToOutput(keyText);
+                this._addToOutput(valueText);
+                j++;
+            }
+            if (isLastTopEntry) {
+                this._addToOutput(" }\n");
+            }
+            else {
+                this._addToOutput(" },\n");
+            }
+            i++;
+        }
+        this._addToOutput("]\n");
+        return this.output;
+    }
+    _addToOutput(string) {
+        this.output = this.output + string;
+    }
+    dumpProperties() {
+        return Object.assign(Object.assign({}, this.parser.dumpProperties()), { output: this.output });
     }
 }
 
@@ -315,73 +382,6 @@ class Parser extends Processor {
     }
 }
 
-const { isString, isNumber } = lodash;
-class ArrayFormatter extends Processor {
-    constructor(parser) {
-        super();
-        this.output = "";
-        this.parser = parser;
-        this.inputJson = parser.inputJson;
-        this.topKeys = parser.topKeys;
-        this.keys = parser.keys;
-        this.keyLengths = parser.keyLengths;
-        this.valueLengths = parser.valueLengths;
-    }
-    format() {
-        this._addToOutput("[\n");
-        let topEntryCount = Object.entries(this.inputJson).length;
-        let i = 1;
-        for (let object of this.inputJson) {
-            let isLastTopEntry = (i === topEntryCount);
-            let objectEntries = Object.entries(object);
-            let entryCount = objectEntries.length;
-            let j = 1;
-            this._addToOutput("    {");
-            for (const [key, value] of objectEntries) {
-                let isLastEntry = (j === entryCount);
-                let longestKeyLength = this.keyLengths[key] + 1;
-                let longestValueLength = this.valueLengths[key] + 2;
-                let keyText = "";
-                keyText += " ";
-                keyText += `"${key}":`.padEnd(longestKeyLength, " ");
-                let valueText = "";
-                if (isString(value)) {
-                    valueText += ` "${value}",`.padEnd(longestValueLength, " ");
-                }
-                else if (isNumber(value)) {
-                    valueText += ` ${value},`.padStart(longestValueLength, " ");
-                }
-                else {
-                    valueText += ` ${value},`.padEnd(longestValueLength, " ");
-                }
-                if (isLastEntry) {
-                    valueText = valueText.replace(/,(\s*)$/, (...args) => {
-                        return args[1];
-                    });
-                }
-                this._addToOutput(keyText);
-                this._addToOutput(valueText);
-                j++;
-            }
-            if (isLastTopEntry) {
-                this._addToOutput(" }\n");
-            }
-            else {
-                this._addToOutput(" },\n");
-            }
-            i++;
-        }
-        this._addToOutput("]\n");
-        return this.output;
-    }
-    _addToOutput(string) {
-        this.output = this.output + string;
-    }
-    dumpProperties() {
-        return Object.assign(Object.assign({}, this.parser.dumpProperties()), { output: this.output });
-    }
-}
-
 class Program {
     constructor(args, flags) {
         this.args = args;
@@ -397,8 +397,9 @@ class Program {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.getInput();
+                this.parser = new Parser(this.inputString);
                 this.outputString = new Parser(this.inputString).format();
-                console.log(this.outputString);
+                console.log(this.parser.dumpProperties());
                 process.exit(0);
             }
             catch (e) {
@@ -460,4 +461,4 @@ const cli = meow(`
         },
     },
 });
-new Program(cli.input, cli.flags).main();
+await new Program(cli.input, cli.flags).main();

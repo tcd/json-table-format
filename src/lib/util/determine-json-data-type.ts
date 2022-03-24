@@ -2,7 +2,7 @@ import { JsonDataType } from "@types"
 import {
     isMeasurable,
     isObject,
-} from "@lib"
+} from "./is-object"
 
 export const determineJsonDataType = (json: object): JsonDataType => {
 

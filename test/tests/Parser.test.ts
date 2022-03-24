@@ -1,7 +1,7 @@
 import { assert } from "chai"
 
 import { JsonDataType } from "@types"
-import { Parser } from "@lib"
+import { Parser } from "@src/lib/Parser"
 import * as cases from "@cases"
 
 describe("Parser", function () {
@@ -38,7 +38,7 @@ describe("Parser", function () {
         assert.sameMembers(f.topKeys, caseData.topKeys)
         assert.deepEqual(f.keyLengths, caseData.keyLengths)
         assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        // assert.equal(f.output.trim(), caseData.output.trim())
+        assert.equal(output.trim(), caseData.output.trim())
     })
 
     it("case 4 - ARRAY", function () {
@@ -52,7 +52,7 @@ describe("Parser", function () {
         assert.equal(output.trim(), caseData.output.trim())
     })
 
-    it.skip("case 5 - big ARRAY", function () {
+    it("case 5 - big ARRAY", function () {
         let caseData = cases.CASE_5
         let f = new Parser(caseData.input)
         let output = f.format()
