@@ -60,7 +60,7 @@ describe("Parser", function () {
         // assert.sameMembers(f.keys, caseData.keys)
         // assert.deepEqual(f.keyLengths, caseData.keyLengths)
         // assert.deepEqual(f.valueLengths, caseData.valueLengths)
-        assert.equal(output.trim(), caseData.output.trim())
+        assert.equal(output.trim(), caseData.output.trim(), "case 5 - big ARRAY")
     })
 
 })
