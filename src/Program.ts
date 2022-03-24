@@ -1,11 +1,11 @@
-import * as yargs from "yargs"
-import { writeFileSync } from "fs"
-import meow from "meow"
+// import * as yargs from "yargs"
+// import { writeFileSync } from "fs"
+// import meow from "meow"
 
 export type InputSetting  = "stdin"  | "file"
 export type OutputSetting = "stdout" | "new-file" | "overwrite-file"
 
-export interface Config {
+export interface CliConfig {
     inputSetting: InputSetting
     outputSetting: OutputSetting
 }
@@ -14,7 +14,7 @@ export class Program {
 
     public args: string[]
     public flags: any
-    public config: Config
+    public config: CliConfig
 
     constructor(args: any, flags: any) {
         this.args   = args

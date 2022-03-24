@@ -1,5 +1,5 @@
 import meow from "meow"
-import { Config, Program } from "./Program"
+import { CliConfig, Program } from "./Program"
 
 const cli = meow(`
     Usage
@@ -14,7 +14,8 @@ const cli = meow(`
 
       $ cat ./package.json | json-table-format --stdin
 `, {
-    importMeta: null,
+    // @ts-ignore:next-line
+    importMeta: import.meta,
     flags: {
         overwrite: {
             type: "boolean",
@@ -29,5 +30,5 @@ const cli = meow(`
 
 new Program(
     cli.input,
-    cli.flags as unknown as Config,
+    cli.flags as unknown as CliConfig,
 ).main()

@@ -21,11 +21,10 @@
         "node": ">=8.0.0"
     },
     "bin": {
-        "json-table-format": "bin/main.js"
+        "json-table-format": "bin/main.mjs"
     },
     "files": [
-        "bin/main.js",
-        "index.js",
+        "bin/main.mjs",
         "index.d.ts",
         "LICENSE.md"
     ],
@@ -38,6 +37,7 @@
         "test:files": "mocha --require ts-node/register --require tsconfig-paths/register"
     },
     "dependencies": {
+        "@rollup/plugin-commonjs": "^21.0.2",
         "fixjson": "^1.1.2",
         "lodash": "^4.17.21",
         "meow": "^10.1.2",

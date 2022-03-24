@@ -1,8 +1,10 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "ESNext",
         "target": "es2015",
         "moduleResolution": "node",
+        "esModuleInterop": true,
+        "downlevelIteration": true,
         "removeComments": true,
         "sourceMap": false,
         "baseUrl": "./",
@@ -10,14 +12,19 @@
             "@src/*": ["./src/*"],
             "@lib":   ["./src/lib/index.ts"],
             "@types": ["./src/types/index.ts"],
-            "@cases": ["./test/cases/index.ts"],
+            // "@cases": ["./test/cases/index.ts"],
         },
         "types": [ "node" ],
-        "outDir": "dist"
+        // "outDir": "dist"
     },
-    "include": [
-        "src/**/*",
-    ],
+    // "include": [
+    //     "src/**/*",
+    // ],
+    "exclude": [
+        "test/**/*",
+        "bin/**/*",
+        "dist/**/*",
+    ]
 }
 
 // "compilerOptions": {
