@@ -1,39 +1,67 @@
-// import * as yargs from "yargs"
+import { readFileSync } from "fs"
+import chalk from "chalk"
+import getStdin from "get-stdin"
 // import { writeFileSync } from "fs"
-// import meow from "meow"
 
-export type InputSetting  = "stdin"  | "file"
-export type OutputSetting = "stdout" | "new-file" | "overwrite-file"
-
-export interface CliConfig {
-    inputSetting: InputSetting
-    outputSetting: OutputSetting
-}
+import { InputSetting, OutputSetting, CliFlags, CliConfig } from "@types"
+import { Parser } from "@lib"
 
 export class Program {
 
     public args: string[]
-    public flags: any
+    public flags: CliFlags
     public config: CliConfig
+
+    public inputFile?: string
+    public inputString?: string
+    public outputString?: string
 
     constructor(args: any, flags: any) {
         this.args   = args
         this.flags  = flags
         this.config = {
-            inputSetting:  "stdin",
-            outputSetting: "stdout",
+            tabWidth:      4,
+            inputSetting:  InputSetting.FILE,
+            outputSetting: OutputSetting.STDOUT,
         }
+        this.configure()
     }
 
     public async main() {
         try {
-            console.log("args:",  this.args)
-            console.log("flags:", this.flags)
+            await this.getInput()
+            // console.log(this.inputString)
+            this.outputString = new Parser(this.inputString).format()
+            console.log(this.outputString)
             process.exit(0)
         } catch (e) {
-            console.error("Error:", e.message)
+            if (e.code == "ENOENT") {
+                console.error(chalk.red(`error - unable to find file: `) + chalk.italic(`"${this.inputFile}"`))
+            } else {
+                console.error(chalk.red("error: " + e.message))
+            }
             process.exit(1)
         }
+    }
+
+    private configure(): void {
+        if (this.flags.stdin == true) {
+            this.config.inputSetting = InputSetting.STDIN
+        } else {
+            this.inputFile = this.args[0]
+        }
+    }
+
+    private async getInput(): Promise<void> {
+        if (this.config.inputSetting == InputSetting.STDIN) {
+            this.inputString = await getStdin()
+            return null
+        }
+        if (this.config.inputSetting == InputSetting.FILE) {
+            this.inputString = readFileSync(this.inputFile).toString()
+            return null
+        }
+        this.inputString = ""
     }
 
 }

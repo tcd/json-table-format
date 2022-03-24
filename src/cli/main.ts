@@ -1,5 +1,7 @@
 import meow from "meow"
-import { CliConfig, Program } from "./Program"
+
+import { CliConfig } from "@types"
+import { Program } from "./Program"
 
 const cli = meow(`
     Usage

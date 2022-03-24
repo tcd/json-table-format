@@ -1,4 +1,6 @@
-import { isString, isNumber, isBoolean } from "lodash"
+// import { isString, isNumber, isBoolean } from "lodash"
+import lodash from "lodash"
+const { isString, isNumber, isBoolean } = lodash
 
 export const isObject = (x: any): boolean => {
 

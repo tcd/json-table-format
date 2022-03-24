@@ -52,7 +52,7 @@ describe("Parser", function () {
         assert.equal(output.trim(), caseData.output.trim())
     })
 
-    it("case 5 - big ARRAY", function () {
+    it.skip("case 5 - big ARRAY", function () {
         let caseData = cases.CASE_5
         let f = new Parser(caseData.input)
         let output = f.format()

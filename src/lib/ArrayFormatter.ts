@@ -1,4 +1,7 @@
-import { isNumber, isString } from "lodash"
+// import { isNumber, isString } from "lodash"
+import lodash from "lodash"
+const { isString, isNumber } = lodash
+
 import { Parser } from "@lib"
 import { Processor } from "./Processor"
 

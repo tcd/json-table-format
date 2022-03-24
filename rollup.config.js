@@ -28,6 +28,10 @@ const config = {
         },
     ],
     external: [
+        "fs",
+        "chalk",
+        "get-stdin",
+        "lodash",
         "meow",
     ],
     plugins: [

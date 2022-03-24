@@ -71,3 +71,32 @@ export enum JsonDataType {
     /** @see {@link ImmeasurableJsonType} */
     OTHER = "other",
 }
+
+// =============================================================================
+// CLI
+// =============================================================================
+
+export enum InputSetting {
+    STDIN = "stdin",
+    FILE = "file",
+}
+
+export enum OutputSetting {
+    STDOUT = "stdout",
+    NEW_FILE = "new-file",
+    OVERWRITE_FILE = "overwrite-file",
+}
+
+export interface CliFlags {
+    overwrite: boolean
+    stdin: boolean
+}
+
+export interface Config {
+    tabWidth: number
+}
+
+export interface CliConfig extends Config {
+    inputSetting: InputSetting
+    outputSetting: OutputSetting
+}
