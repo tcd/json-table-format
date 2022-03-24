@@ -1,8 +1,6 @@
 # json-table-format
 
-## Goals
-
-### given this input
+## given this input:
 
 ```json
 { 
@@ -22,7 +20,7 @@
 }
 ```
 
-### produce this output
+## produce this output:
 
 ```json
 { 
@@ -31,8 +29,3 @@
     "age":       { "type": "integer", "description": "Age in years which must be equal to or greater than zero.", "minimum": 0 }
 }
 ```
-
-## References
-
-- [JSON Lines](https://jsonlines.org/examples/)
-- [rhysd/fixjson](https://github.com/rhysd/fixjson)

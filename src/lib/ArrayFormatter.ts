@@ -35,9 +35,6 @@ export class ArrayFormatter extends Processor {
 
                 let keyText = ""
                 keyText += " "
-                // if (!isLastEntry) {
-                //     longestKeyLength += 1
-                // }
                 keyText += `"${key}":`.padEnd(longestKeyLength, " ")
 
                 let valueText = ""
@@ -50,7 +47,6 @@ export class ArrayFormatter extends Processor {
                 }
                 if (isLastEntry) {
                     valueText = valueText.replace(/,(\s*)$/, (...args) => {
-                        // console.log(args)
                         return args[1]
                     })
                 }

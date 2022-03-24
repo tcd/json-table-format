@@ -1,4 +1,3 @@
-import { isNumber, isString } from "lodash"
 import { JsonDataType } from "@types"
 import {
     determineJsonDataType,
@@ -13,6 +12,7 @@ import {
 
 import { Processor } from "./Processor"
 
+/** Collects information required for formatting */
 export class Parser extends Processor {
 
     public jsonDataType: JsonDataType

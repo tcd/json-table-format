@@ -42,9 +42,11 @@ export const getLongestKeyLengths_2 = (x: MeasurableJsonArrayType): any => {
 }
 
 export const getLongestKeyLengths_1 = (values: string[]): any => {
-    let result = {}
-    for (let value of values) {
-        result[value] = getLength(value)
-    }
-    return result
+    // let result = {}
+    // for (let value of values) {
+    //     result[value] = getLength(value)
+    // }
+    // return result
+    // return values.reduce((previous, current) => ({...previous, [current]: getLength(current)}), {})
+    return values.reduce((x, y) => ({...x, [y]: getLength(y)}), {})
 }
