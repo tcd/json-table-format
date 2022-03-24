@@ -1,7 +1,7 @@
 {
     "name": "json-table-format",
     "description": "Format JSON in a compact, readable, aligned way.",
-    "version": "1.0.0-rc.1",
+    "version": "1.0.0-rc.2",
     "license": "MIT",
     "author": "Clay Dunston <dunstontc@gmail.com>",
     "homepage": "https://github.com/tcd/json-table-format#readme",
@@ -26,6 +26,7 @@
     },
     "files": [
         "bin/main.mjs",
+        "bin/json-table-format.mjs",
         "index.d.ts",
         "LICENSE.md"
     ],
