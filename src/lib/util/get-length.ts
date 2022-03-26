@@ -1,7 +1,9 @@
-import {
-    isString,
-    isNumber,
-} from "lodash"
+// import {
+//     isString,
+//     isNumber,
+// } from "lodash"
+import lodash from "lodash"
+const { isString, isNumber } = lodash
 
 export const VALUE_LENGTHS = {
     "true":  4,

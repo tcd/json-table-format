@@ -1,4 +1,4 @@
-import { isObject } from "@lib"
+import { isObject } from "./is-object"
 
 export const isValid = (x: any): boolean => {
     if (!Array.isArray(x)) {

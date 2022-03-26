@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "CommonJS",
         "esModuleInterop": true,
+        "downlevelIteration": true,
         "baseUrl": "./",
         "paths": {
             "@src/*": ["./src/*"],
@@ -14,6 +15,8 @@
             "mocha",
             "chai",
         ],
-        "downlevelIteration": true,
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
     },
 }
